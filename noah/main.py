@@ -18,15 +18,7 @@ left_motor   = Motor(Port.B)               # Linker Grosser Motor an Port B
 right_motor  = Motor(Port.C)               # Rechter Grosser Motor an Port C
 infrared = UltrasonicSensor(Port.S3)
 
-
-ev3.screen.print(medium_motor.angle())
-
 # Winkelzähler auf 0 setzen
-medium_motor.reset_angle(0)
-left_motor.reset_angle(0)
-right_motor.reset_angle(0)
-
-ev3.screen.print(medium_motor.angle())
 
 # ------------------------------------------------------------------------
 # 1. Medium-Motor 90° vor und zurück
@@ -58,7 +50,6 @@ ev3.screen.print(medium_motor.angle())
 # 3. In-Place-Drehung um 90°
 # ------------------------------------------------------------------------
 
-
 wheel_diameter = 56  # Durchmesser der Räder in mm (EV3 Standard: ~56mm)
 axle_track = 114     # Spurbreite zwischen den Rädern in mm (z.B. 114mm)
 drive_base = DriveBase(left_motor, right_motor,
@@ -67,10 +58,9 @@ drive_base = DriveBase(left_motor, right_motor,
 # Roboter geradeaus fahren lassen
                   # 500 mm vorwärts (50 cm)
 # Winkelstände der Motoren abfragen (beide sollten ~360° = eine Umdrehung haben bei 56mm Rädern)
-angle_left = left_motor.angle()           
-angle_right = right_motor.angle()
 
-while(infrared.distance(True) > 100):
-    drive_base.straight(50)
+if __name__ == "__main__":
+    while(infrared.distance(True) > 100):
+        drive_base.straight(50)
 
-ev3.screen.print("There is an object in front of me.")
+    ev3.screen.print("There is an object in front of me.")
