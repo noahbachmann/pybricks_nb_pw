@@ -17,8 +17,8 @@ ev3 = EV3Brick()
 middle_motor = Motor(Port.A)         
 left_motor   = Motor(Port.B)              
 right_motor  = Motor(Port.C)               
-infrared = UltrasonicSensor(Port.S4)
-color = ColorSensor(Port.S3)
+infrared = UltrasonicSensor(Port.S3)
+color = ColorSensor(Port.S4)
 
 # screenWidth = 178
 # screenHeight = 128
@@ -31,20 +31,17 @@ drive_base = DriveBase(left_motor, right_motor,
 if __name__ == "__main__":
     while(infrared.distance(True) > 120):
         drive_base.straight(100)
-        if color.color() == Color.BLACK:
-            ev3.screen.load_image("black_image.png")
+        if color.color() == Color.BROWN:
+            break
+        elif color.color() == Color.BLACK:
+            ev3.screen.load_image("black_image.jpg")
             ev3.speaker.play_file("black_sound.wav")
-        elif color.color() == Color.BLUE:
-            # handle blue
-            pass
         elif color.color() == Color.GREEN:
             ev3.screen.load_image("green_image.png")
-            ev3.speaker.play_file("green_audio.mp3")
-        elif color.color() == Color.YELLOW:
-            # handle yellow
-            pass
+            ev3.speaker.play_file("green_sound.wav")
         elif color.color() == Color.RED:
             ev3.light.on(Color.RED)
+            ev3.screen.load_image("red_image.png")
             drive_base.drive(0, 500)
             middle_motor.run(200)
             wait(3000)
@@ -55,9 +52,14 @@ if __name__ == "__main__":
             middle_motor.stop()
             ev3.light.off()
         elif color.color() == Color.WHITE:
-            pass
-        elif color.color() == Color.BROWN:
-            break
+            ev3.screen.load_image("white_image.jpg")
+            ev3.speaker.play_file("white_sound.wav")
+        elif color.color() == Color.BLUE:
+            ev3.screen.load_image("blue_image.jpg")
+            ev3.speaker.play_file("blue_sound.wav")
+        elif color.color() == Color.YELLOW:
+            ev3.screen.load_image("yellow_image.jpg")
+            ev3.speaker.play_file("yellow_sound.wav")
         else:
             pass
 

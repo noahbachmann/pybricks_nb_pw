@@ -1,3 +1,5 @@
+#!/usr/bin/env pybricks-micropython
+
 from pybricks.hubs import EV3Brick
 from pybricks.ev3devices import Motor, UltrasonicSensor
 from pybricks.parameters import Port, Stop
@@ -21,3 +23,9 @@ right_motor.reset_angle(0)
 
 # ------------------------------------------------------------------------
 
+medium_motor.run_target(
+    speed = 800,
+    target_angle = 90,
+    then = Stop.HOLD,
+    wait = True
+)
