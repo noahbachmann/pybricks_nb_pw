@@ -29,8 +29,11 @@ drive_base = DriveBase(left_motor, right_motor,
                        wheel_diameter, axle_track)
 
 if __name__ == "__main__":
+    distance = 0
+    middle_motor.run(100)
     while(infrared.distance(True) > 120):
         drive_base.straight(100)
+        distance += 100
         if color.color() == Color.BROWN:
             break
         elif color.color() == Color.BLACK:
@@ -43,13 +46,13 @@ if __name__ == "__main__":
             ev3.light.on(Color.RED)
             ev3.screen.load_image("red_image.png")
             drive_base.drive(0, 500)
-            middle_motor.run(200)
+            middle_motor.run(250)
             wait(3000)
             drive_base.stop()
             drive_base.drive(0, -500)
             wait(3000)
             drive_base.stop()
-            middle_motor.stop()
+            middle_motor.run(100)
             ev3.light.off()
         elif color.color() == Color.WHITE:
             ev3.screen.load_image("white_image.jpg")
@@ -64,5 +67,10 @@ if __name__ == "__main__":
             pass
 
         wait(2000)
-
-    ev3.screen.print("End of program.")
+    
+    ev3.screen.load_image("end.jpg")
+    middle_motor.stop(Stop.HOLD)
+    drive_base.turn(180)    
+    drive_base.straight(distance)
+    drive_base.turn(180)
+    ev3.speaker.play_file("end-sound.wav")
