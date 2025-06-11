@@ -16,19 +16,19 @@ color = ColorSensor(Port.S4)
 
 # screenWidth = 178
 # screenHeight = 128
-#9.5cm pro 100 fahrt
+# 9.5cm pro 100 fahrt
 
 wheel_diameter = 56  # Durchmesser der Räder in mm (EV3 Standard: ~56mm)
 axle_track = 114     # Spurbreite zwischen den Rädern in mm (z.B. 114mm)
 drive_base = DriveBase(left_motor, right_motor,
                        wheel_diameter, axle_track)
-
+travel_distance = 85
 if __name__ == "__main__":
     distance = 0
-    middle_motor.run(400)
-    while(infrared.distance(True) > 120):
-        drive_base.straight(100)
-        distance += 100
+    middle_motor.run(450)
+    while(infrared.distance(True) > 150):
+        drive_base.straight(travel_distance)
+        distance += travel_distance
         if color.color() == Color.BROWN:
             break
         elif color.color() == Color.BLACK:
@@ -40,14 +40,14 @@ if __name__ == "__main__":
         elif color.color() == Color.RED:
             ev3.light.on(Color.RED)
             ev3.screen.load_image("red_image.png")
-            middle_motor.run(900)
+            middle_motor.run(1200)
             drive_base.drive(0, 100)
-            wait(3000)
+            ev3.speaker.play_file("red_sound.wav")
             drive_base.stop()
-            drive_base.drive(0, -100)
-            wait(3000)
+            drive_base.drive(0, -105)
+            ev3.speaker.play_file("red_sound.wav")
             drive_base.stop()
-            middle_motor.run(400)
+            middle_motor.run(450)
             ev3.light.off()
         elif color.color() == Color.WHITE:
             ev3.screen.load_image("white_image.png")
@@ -58,14 +58,13 @@ if __name__ == "__main__":
         elif color.color() == Color.YELLOW:
             ev3.screen.load_image("yellow_image.png")
             ev3.speaker.play_file("yellow_sound.wav")
-        else:
-            continue
 
-        wait(2000)
+        wait(1500)
     
     ev3.screen.load_image("end.png")
     middle_motor.stop(Stop.HOLD)
     drive_base.turn(180)    
     drive_base.straight(distance)
     drive_base.turn(180)
-    ev3.speaker.play_file("end-sound.wav")
+    ev3.speaker.play_file("end_sound.wav")
+    wait(1000)
